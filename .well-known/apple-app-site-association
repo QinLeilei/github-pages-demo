@@ -6,4 +6,8 @@
 \deftab939
 \pard\tx939\pardeftab939\pardirnatural\partightenfactor0
 
-\f0\fs38 \cf0 \cb2 \{"webcredentials":\{"apps":["5YK3LG4D3X.com.chasedream"]\}\}}
+\f0\fs38 \cf0 \cb2 \{\
+	"webcredentials":\
+		\{"apps":["5YK3LG4D3X.com.chasedream"]\
+	\}\
+\}}
