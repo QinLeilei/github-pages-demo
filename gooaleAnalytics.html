@@ -8,25 +8,25 @@
     <body>
         <div class='a_fl'>
             <!-- Global site tag (gtag.js) - Google Analytics -->
-            
             <script>
-                var url = null;
-                function googleA(googleUrl){
-                    url = googleUrl;
-                    alert(url);
+                var request = null;
+                function googleUrl(googleUrl){
+                    request = googleUrl;
+                    alert(request);
+                    document.write('<script async src='+request+'></scr'+'ipt>');
                 }
+            </script>
             
-                </script>
-            <script async src="https://www.googletagmanager.com/gtag/js?id=UA-134497917-21"></script>
+            <!--            <script async src="https://www.googletagmanager.com/gtag/js?id=UA-134497917-21"></script>-->
             
             <script>
-                function googleA(adId){
-                    alert(adId)
+                function googleA(config,adId){
+                    alert(adId);
                     window.dataLayer = window.dataLayer || [];
                     function gtag(){dataLayer.push(arguments);}
                     gtag('js', new Date());
                     
-                    gtag('config', adId);
+                    gtag(config,adId);
                 }
             </script>
             
