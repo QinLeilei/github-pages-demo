@@ -18,13 +18,11 @@
                     for (i = 0;i < strs.length ;i++ )
                     {
                         request = strs[i];
-                        alert(request);
                         if(request.indexOf("id=") > -1){
                             
                             var idArr = new Array();
                             idArr = request.split("id=");
                             if(idArr.length > 1){
-                                alert(idArr[idArr.length - 1]);
                                 idStr = idArr[idArr.length - 1];
                             }
                         }
