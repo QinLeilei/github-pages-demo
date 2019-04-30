@@ -14,16 +14,30 @@
                     
                     var strs = new Array(); //定义一数组
                     strs = googleUrl.split("#*#"); //字符分割
-                    
+                    var idStr = '';
                     for (i = 0;i < strs.length ;i++ )
                     {
-                        alert(strs[i]);
-                        document.write('<script async src=https://www.googletagmanager.com/gtag/js?id=UA-134497917-21></scr'+'ipt>');
+                        <!--                        alert(strs[i]);-->
+                        request = 'https://www.googletagmanager.com/gtag/js?id=UA-134497917-21';
+                        
+                        if(request.indexOf("id=") > -1){
+                            
+                            var idArr = new Array(); //定义一数组
+                            idArr = request.split("id=");
+                            if(idArr.length > 1){
+                                alert(idArr[idArr.length - 1]);
+                                idStr = 'UA-134497917-21';
+                            }
+                        }
+                        
+                        
+                        document.write('<script async src='+request+'></scr'+'ipt>');
+                        
                         window.dataLayer = window.dataLayer || [];
                         function gtag(){dataLayer.push(arguments);}
                         gtag('js', new Date());
                         
-                        gtag('config','UA-134497917-21');
+                        gtag('config',idStr);
                     }
                     <!--                    document.write('<script async src=https://www.googletagmanager.com/gtag/js?id=UA-134497917-21></scr'+'ipt>');-->
                 }
