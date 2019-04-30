@@ -8,26 +8,32 @@
     <body>
         <div class='a_fl'>
             <!-- Global site tag (gtag.js) - Google Analytics -->
-            <script>
-                var request = null;
-                function googleUrl(googleUrl){
-                    request = googleUrl;
-                    alert(request);
-                    document.write('<script async src='+request+'></scr'+'ipt>');
-                }
-            </script>
-            
             <!--            <script async src="https://www.googletagmanager.com/gtag/js?id=UA-134497917-21"></script>-->
-            
             <script>
-                function googleA(config,adId){
-                    alert(adId);
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){dataLayer.push(arguments);}
-                    gtag('js', new Date());
+                function googleUrl(googleUrl){
                     
-                    gtag(config,adId);
+                    var strs = new Array(); //定义一数组
+                    strs = googleUrl.split("#*#"); //字符分割
+                    
+                    for (i = 0;i < strs.length ;i++ )
+                    {
+                        alert(strs[i]);
+                        
+                        
+                    }
+                    document.write('<script async src=https://www.googletagmanager.com/gtag/js?id=UA-134497917-21></scr'+'ipt>');
                 }
+            
+            
+            
+            function googleA(config,adId){
+                alert(adId);
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                
+                gtag(config,adId);
+            }
             </script>
             
             
