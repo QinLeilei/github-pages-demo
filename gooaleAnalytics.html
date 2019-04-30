@@ -18,23 +18,28 @@
                     for (i = 0;i < strs.length ;i++ )
                     {
                         alert(strs[i]);
+                        document.write('<script async src=https://www.googletagmanager.com/gtag/js?id=UA-134497917-21></scr'+'ipt>');
+                        alert(adId);
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
                         
-                        
+                        gtag('config','UA-134497917-21');
                     }
-                    document.write('<script async src=https://www.googletagmanager.com/gtag/js?id=UA-134497917-21></scr'+'ipt>');
+                    <!--                    document.write('<script async src=https://www.googletagmanager.com/gtag/js?id=UA-134497917-21></scr'+'ipt>');-->
                 }
             
+                </script>
             
             
-            function googleA(config,adId){
-                alert(adId);
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                
-                gtag(config,adId);
-            }
-            </script>
+            <!--                function googleA(config,adId){-->
+            <!--                    alert(adId);-->
+            <!--                    window.dataLayer = window.dataLayer || [];-->
+            <!--                    function gtag(){dataLayer.push(arguments);}-->
+            <!--                    gtag('js', new Date());-->
+            <!--                    -->
+            <!--                    gtag(config,adId);-->
+            <!--                }-->
             
             
         </div>
