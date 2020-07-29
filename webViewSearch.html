@@ -63,18 +63,19 @@
                             span.style.color="black";
 
 
+            　var thatElement = element;
 
                             text = document.createTextNode(value.substr(idx+keyword.length));
 
-                            element.deleteData(idx, value.length - idx);
+                            thatElement.deleteData(idx, value.length - idx);
 
-                            var next = element.nextSibling;
+                            var next = thatElement.nextSibling;
 
-                            element.parentNode.insertBefore(span, next);
+                            thatElement.parentNode.insertBefore(span, next);
 
-                            element.parentNode.insertBefore(text, next);
+                            thatElement.parentNode.insertBefore(text, next);
 
-                            element = text;
+                            thatElement = text;
 
                             MyApp_SearchResultCount++;    // update the counter
 
