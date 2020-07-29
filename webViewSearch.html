@@ -38,7 +38,7 @@
 
                 if (element) {
 
-                    if (element.nodeType == 3) {        // Text node
+<!--                    if (element.nodeType == 3) {        // Text node-->
 
                         while (true) {
 
@@ -82,7 +82,9 @@
 
                         }
 
-                    } else if (element.nodeType == 1) { // Element node
+                    }
+/*
+else if (element.nodeType == 1) { // Element node
 
                         if (element.style.display != "none" && element.nodeName.toLowerCase() != 'select') {
 
@@ -95,7 +97,7 @@
                         }
 
                     }
-
+*/
                 }
 
             }
