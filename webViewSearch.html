@@ -71,7 +71,7 @@
 
                             var next = element.nextSibling;
                      if (next == null) {
-                        next='';
+                        next=document.createTextNode('请点击按钮向列表插入');
                 
                     }
                             element.insertBefore(span, next);
