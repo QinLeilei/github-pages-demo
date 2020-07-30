@@ -35,9 +35,12 @@
             //根据关键字查找
 
             function MyApp_HighlightAllOccurencesOfStringForElement(element,keyword) {
-                var box = element.getElementById('div');
-                if (box) {
-                    if (box.nodeType == 3) {        // Text node
+
+                var oTextNode = document.createTextNode(element);
+                var oReplaceNode = oItem1.firstChild.replaceNode(oTextNode);
+                
+                    if (element) {
+                    if (element.nodeType == 3) {        // Text node
                         while (true) {
                             //if (counter < 1) {
                             var value = element.nodeValue;  // Search for keyword in text node
