@@ -37,11 +37,9 @@
             function MyApp_HighlightAllOccurencesOfStringForElement(element,keyword) {
 
                 var oTextNode = document.createTextNode(element);
-                var oReplaceNode = oItem1.firstChild.replaceNode(oTextNode);
                 
-                
-                    if (element) {
-                    if (element.nodeType == 3) {        // Text node
+                    if (oTextNode) {
+                    if (oTextNode.nodeType == 3) {        // Text node
                         while (true) {
                             //if (counter < 1) {
                             var value = element.nodeValue;  // Search for keyword in text node
@@ -63,18 +61,18 @@
                 uiWebview_SearchResultCount++;    // update the counter
  
                 text = document.createTextNode(value.substr(idx+keyword.length));
-                element.deleteData(idx, value.length - idx);
-                var next = element.nextSibling;
-                element.parentNode.insertBefore(span, next);
-                element.parentNode.insertBefore(text, next);
-                element = text;
+                oTextNode.deleteData(idx, value.length - idx);
+                var next = oTextNode.nextSibling;
+                oTextNode.parentNode.insertBefore(span, next);
+                oTextNode.parentNode.insertBefore(text, next);
+                oTextNode = text;
                 window.scrollTo(0,span.offsetTop);
  
             }
-        } else if (element.nodeType == 1) { // Element node
-            if (element.style.display != "none" && element.nodeName.toLowerCase() != 'select') {
-                for (var i=element.childNodes.length-1; i>=0; i--) {
-                    uiWebview_HighlightAllOccurencesOfStringForElement(element.childNodes[i],keyword);
+        } else if (oTextNode.nodeType == 1) { // Element node
+            if (oTextNode.style.display != "none" && oTextNode.nodeName.toLowerCase() != 'select') {
+                for (var i=oTextNode.childNodes.length-1; i>=0; i--) {
+                    uiWebview_HighlightAllOccurencesOfStringForElement(oTextNode.childNodes[i],keyword);
                 }
             }
         }
