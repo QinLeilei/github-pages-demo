@@ -55,7 +55,6 @@
                             span.appendChild(text);
 
 
-
                             span.setAttribute("class","MyAppHighlight");
 
                             span.style.backgroundColor="yellow";
@@ -63,20 +62,18 @@
                             span.style.color="black";
 
 
-            　var thatElement = element;
-
                             text = document.createTextNode(value.substr(idx+keyword.length));
 
-                            //thatElement.deleteData(idx, value.length - idx);
+                            element.deleteData(idx, value.length - idx);
             
 
-                            var next = thatElement;
+                            var next = value.nextSibling;
 
-                            thatElement.parentNode.insertBefore(span, next);
+                            value.parentNode.insertBefore(span, next);
 
-                            thatElement.parentNode.insertBefore(text, next);
+                            value.parentNode.insertBefore(text, next);
 
-                            thatElement = text;
+                            value = text;
 
                             MyApp_SearchResultCount++;    // update the counter
 
