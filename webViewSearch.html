@@ -42,7 +42,7 @@
                     if (oTextNode.nodeType == 3) {        // Text node
                         while (true) {
                             //if (counter < 1) {
-                            var value = element.nodeValue;  // Search for keyword in text node
+                            var value = oTextNode.nodeValue;  // Search for keyword in text node
                             var idx = value.toLowerCase().indexOf(keyword);
  
                     if (idx < 0) break;             // not found, abort
