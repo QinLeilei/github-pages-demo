@@ -70,7 +70,10 @@
                             element.deleteData(idx, value.length - idx);
 
                             var next = element.nextSibling;
-
+                     if (next == null) {
+                        next='';
+                
+                    }
                             element.parentNode.insertBefore(span, next);
 
                             element.parentNode.insertBefore(text, next);
