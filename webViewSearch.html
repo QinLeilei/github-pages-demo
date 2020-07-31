@@ -85,11 +85,11 @@
 
         // 根据关键字查找 供WKWebView调用
 
-        function MyApp_HighlightAllOccurencesOfString(elementText,keyword) {
+        function MyApp_HighlightAllOccurencesOfString(keyword) {
 
             MyApp_RemoveAllHighlights();
 
-            MyApp_HighlightAllOccurencesOfStringForElement(elementText, keyword.toLowerCase());
+            MyApp_HighlightAllOccurencesOfStringForElement(document.body, keyword.toLowerCase());
 
         }
 
