@@ -4,241 +4,225 @@
         <meta charset="utf-8">
         <title>我是头标签</title>
         <script  type="text/javascript">
-        // JS给OC发送消息
-        function js2oc1() {
-            window.webkit.messageHandlers.noParamsFunction.postMessage('我是js方法传过来的数据');
-        }
-        function js2oc2(x,y) {
-            window.webkit.messageHandlers.haveParamsFunction.postMessage({name:x,age:y});
-        }
-    
-        // oc点击事件调用该函数
-      /*
-      function oc2js1() {
-            alert("OC调用js方法 - 无参");
-            document.getElementById("labelId").innerHTML = "oc按钮调用了js方法 - 无参";
-        }
-        function oc2js2(a,b) {
-            alert("OC调用js方法 - 有参");
-            document.getElementById("labelId").innerHTML = "oc按钮调用了js方法 - 参数："+a+b;
-        }
-        */
-        
+
+
         var MyApp_SearchResultCount = 0;
 
-            var MyApp_SearchResults = [];
+        var MyApp_SearchResults = [];
 
-            var MyApp_selectSpan;
+        var MyApp_selectSpan;
 
-            var MyApp_SwitchIndex = 0;
+        var MyApp_SwitchIndex = 0;
 
-            //根据关键字查找
+        //根据关键字查找
 
-            function MyApp_HighlightAllOccurencesOfStringForElement(elementText,keyword) {
-                var element = document.createTextNode(elementText);
+        function MyApp_HighlightAllOccurencesOfStringForElement(elementText,keyword) {
+            var element = document.createTextNode(elementText);
 
-                if (element) {
+            if (element) {
 
-                    if (element.nodeType == 3) {        // Text node
+                if (element.nodeType == 3) {        // Text node
 
-                        while (true) {
+                    while (true) {
 
-                            var value = element.nodeValue;  // Search for keyword in text node
+                        var value = element.nodeValue;  // Search for keyword in text node
 
-                            var idx = value.toLowerCase().indexOf(keyword);
+                        var idx = value.toLowerCase().indexOf(keyword);
 
-                            if (idx < 0) break;            // not found, abort
+                        if (idx < 0) break;            // not found, abort
 
-                            var span = document.createElement("span");
+                        var span = document.createElement("span");
 
-                            var text = document.createTextNode(value.substr(idx,keyword.length));
+                        var text = document.createTextNode(value.substr(idx,keyword.length));
 
-                            span.appendChild(text);
+                        span.appendChild(text);
 
 
+                        span.setAttribute("class","MyAppHighlight");
 
-                            span.setAttribute("class","MyAppHighlight");
+                        span.style.backgroundColor="yellow";
 
-                            span.style.backgroundColor="yellow";
+                        span.style.color="black";
 
-                            span.style.color="black";
 
+                        text = document.createTextNode(value.substr(idx+keyword.length));
 
+                        element.deleteData(idx, value.length - idx);
 
-                            text = document.createTextNode(value.substr(idx+keyword.length));
+                        var next = element.nextSibling;
+                        if (next == null) {
+                            next=document.createTextNode("");
+            
+                        }
+                        //element.insertBefore(span, next);
+                        //element.insertBefore(text, next);
 
-                            element.deleteData(idx, value.length - idx);
+                        element = text;
 
-                            var next = element.nextSibling;
-                     if (next == null) {
-                        next=document.createTextNode('请点击按钮向列表插入');
-                
-                    }
-                            element.insertBefore(span, next);
+                        MyApp_SearchResultCount++;    // update the counter
 
-                            element.insertBefore(text, next);
+                        MyApp_SearchResults.push(span);
 
-                            element = text;
+                    }
 
-                            MyApp_SearchResultCount++;    // update the counter
+                } else if (element.nodeType == 1) { // Element node
 
-                            MyApp_SearchResults.push(span);
+                    if (element.style.display != "none" && element.nodeName.toLowerCase() != "select") {
 
-                        }
+                        for (var i=element.childNodes.length-1; i>=0; i--) {
 
-                    } else if (element.nodeType == 1) { // Element node
+                            MyApp_HighlightAllOccurencesOfStringForElement(element.childNodes[i],keyword);
 
-                        if (element.style.display != "none" && element.nodeName.toLowerCase() != 'select') {
+                        }
 
-                            for (var i=element.childNodes.length-1; i>=0; i--) {
+                    }
 
-                                MyApp_HighlightAllOccurencesOfStringForElement(element.childNodes[i],keyword);
+                }
 
-                            }
+            }
 
-                        }
+        }
 
-                    }
+        // 根据关键字查找 供WKWebView调用
 
-                }
+        function MyApp_HighlightAllOccurencesOfString(keyword) {
 
-            }
+            MyApp_RemoveAllHighlights();
 
-            // 根据关键字查找 供WKWebView调用
+            MyApp_HighlightAllOccurencesOfStringForElement(document.body, keyword.toLowerCase());
 
-            function MyApp_HighlightAllOccurencesOfString(keyword) {
+        }
 
-                MyApp_RemoveAllHighlights();
+        // 关键关键字 移除高亮显示
 
-                MyApp_HighlightAllOccurencesOfStringForElement(document.body, keyword.toLowerCase());
+        function MyApp_RemoveAllHighlightsForElement(element) {
 
-            }
+            if (element) {
 
-            // 关键关键字 移除高亮显示
+                if (element.nodeType == 1) {
 
-            function MyApp_RemoveAllHighlightsForElement(element) {
+                    if (element.getAttribute("class") == "MyAppHighlight") {
 
-                if (element) {
+                        var text = element.removeChild(element.firstChild);
 
-                    if (element.nodeType == 1) {
+                        element.parentNode.insertBefore(text,element);
 
-                        if (element.getAttribute("class") == "MyAppHighlight") {
+                        element.parentNode.removeChild(element);
 
-                            var text = element.removeChild(element.firstChild);
+                        return true;
 
-                            element.parentNode.insertBefore(text,element);
+                    } else {
 
-                            element.parentNode.removeChild(element);
+                        var normalize = false;
 
-                            return true;
+                        for (var i=element.childNodes.length-1; i>=0; i--) {
 
-                        } else {
+                            if (MyApp_RemoveAllHighlightsForElement(element.childNodes[i])) {
 
-                            var normalize = false;
+                                normalize = true;
 
-                            for (var i=element.childNodes.length-1; i>=0; i--) {
+                            }
 
-                                if (MyApp_RemoveAllHighlightsForElement(element.childNodes[i])) {
+                        }
 
-                                    normalize = true;
+                        if (normalize) {
 
-                                }
+                            element.normalize();
 
-                            }
+                        }
 
-                            if (normalize) {
+                    }
 
-                                element.normalize();
+                }
 
-                            }
+            }
 
-                        }
+            return false;
 
-                    }
+        }
 
-                }
+        //WKWebView调用移除高亮
 
-                return false;
+        function MyApp_RemoveAllHighlights() {
 
-            }
+            MyApp_SearchResultCount = 0;
 
-            //WKWebView调用移除高亮
+            MyApp_SearchResults = [];
 
-            function MyApp_RemoveAllHighlights() {
+            MyApp_RemoveAllHighlightsForElement(document.body);
 
-                MyApp_SearchResultCount = 0;
+        }
 
-                MyApp_SearchResults = [];
+        //滚动到搜索到的第一个关键字
 
-                MyApp_RemoveAllHighlightsForElement(document.body);
+        function MyApp_ScrollToFiristResult() {
 
-            }
+            MyApp_ScrollToIndex(0);
 
-            //滚动到搜索到的第一个关键字
+        }
 
-            function MyApp_ScrollToFiristResult() {
+        //滚动到指定下标的关键字
 
-                MyApp_ScrollToIndex(0);
+        function MyApp_ScrollToIndex(index) {
 
-            }
+            if (MyApp_selectSpan) {
 
-            //滚动到指定下标的关键字
+                MyApp_selectSpan.style.backgroundColor = "yellow";
 
-            function MyApp_ScrollToIndex(index) {
+            }
 
-                if (MyApp_selectSpan) {
+            var span = MyApp_SearchResults[MyApp_SearchResultCount - index - 1];
 
-                    MyApp_selectSpan.style.backgroundColor = "yellow";
+            span.style.backgroundColor = "orange";
 
-                }
+            MyApp_selectSpan = span;
 
-                var span = MyApp_SearchResults[MyApp_SearchResultCount - index - 1];
+            var h = document.body.clientHeight; //获取设备的高度
 
-                span.style.backgroundColor = "orange";
+            window.scrollTo(0,span.offsetTop-h/2); //滚动到屏幕中央
 
-                MyApp_selectSpan = span;
+        }
 
-                var h = document.body.clientHeight; //获取设备的高度
+        // 上移
 
-                window.scrollTo(0,span.offsetTop-h/2); //滚动到屏幕中央
+        function MyApp_SwitchToUp() {
 
-            }
+            MyApp_SwitchIndex--;
 
-            // 上移
+            if (MyApp_SwitchIndex < 0) {
 
-            function MyApp_SwitchToUp() {
+                MyApp_SwitchIndex = MyApp_SearchResultCount-1;
 
-                MyApp_SwitchIndex--;
+            }
 
-                if (MyApp_SwitchIndex < 0) {
+            MyApp_ScrollToIndex(MyApp_SwitchIndex);
 
-                    MyApp_SwitchIndex = MyApp_SearchResultCount-1;
+            return MyApp_SwitchIndex;
 
-                }
+        }
 
-                MyApp_ScrollToIndex(MyApp_SwitchIndex);
+        // 下移
 
-                return MyApp_SwitchIndex;
+        function MyApp_SwitchToDown() {
 
-            }
+            MyApp_SwitchIndex++;
 
-            // 下移
+            if (MyApp_SwitchIndex >= MyApp_SearchResultCount) {
 
-            function MyApp_SwitchToDown() {
+                MyApp_SwitchIndex = 0;
 
-                MyApp_SwitchIndex++;
+            }
 
-                if (MyApp_SwitchIndex >= MyApp_SearchResultCount) {
+            MyApp_ScrollToIndex(MyApp_SwitchIndex);
 
-                    MyApp_SwitchIndex = 0;
+            return MyApp_SwitchIndex;
 
-                }
+        }
 
-                MyApp_ScrollToIndex(MyApp_SwitchIndex);
 
-                return MyApp_SwitchIndex;
 
-            }
+
+
 
         
         </script>
