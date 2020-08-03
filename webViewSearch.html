@@ -51,7 +51,7 @@
 
                         var next = element.nextSibling;
                         if (next == null) {
-                            next=document.createTextNode("");
+                            next=document.createTextNode(element);
             
                         }
                         element.parentNode.insertBefore(span, next);
