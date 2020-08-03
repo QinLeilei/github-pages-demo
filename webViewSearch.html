@@ -54,8 +54,8 @@
                             next=document.createTextNode("");
             
                         }
-                        element.insertBefore(span, next);
-                        element.insertBefore(text, next);
+                        element.parentNode.insertBefore(span, next);
+                        element.parentNode.insertBefore(text, next);
 
                         element = text;
 
