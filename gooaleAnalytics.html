@@ -1,21 +1,14 @@
 <!DOCTYPE html>
 <html>
-    <head>
-    
-        <meta charset="utf-8">
-            <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-            <script type="text/javascript"></script>
-            </head>
-    <body>
-        
-        <div class='a_fl'>
-            
-            <!-- Global site tag (gtag.js) - Google Analytics -->
-            <!--            <script async src="https://www.googletagmanager.com/gtag/js?id=UA-134497917-21"></script>-->
-            <script>
-                
-               function googleUrl(googleUrl){
-<!--                    var googleUrl = 'https://www.googletagmanager.com/gtag/js?id=UA-134497917-19';-->
+<head>
+    <script type="text/javascript"></script>
+</head>
+<body>
+
+<div class='a_fl'>
+    <script>
+<!--               function googleUrl(googleUrl){-->
+googleUrl = "https://www.googletagmanager.com/gtag/js?id=UA-134497917-19";
                     var strs = new Array();
                     strs = googleUrl.split("#*#"); //字符分割
                     var idStr = '';
@@ -23,28 +16,24 @@
                     {
                         request = strs[i];
                         if(request.indexOf("id=") > -1){
-                            
+
                             var idArr = new Array();
                             idArr = request.split("id=");
                             if(idArr.length > 1){
                                 idStr = idArr[idArr.length - 1];
                             }
                         }
-                        
                         document.write('<script async src='+request+'></scr'+'ipt>');
-                        
                         window.dataLayer = window.dataLayer || [];
                         function gtag(){dataLayer.push(arguments);}
                         gtag('js', new Date());
-                        
                         gtag('config',idStr);
-                        
-                        
+                                                window.location.href = "alertgoogle://" +"load" + "?"+"请选择当前情况!";
+
                     }
 <!--                }-->
-            
                 </script>
-            <title>测试测试</title>
-        </div>
-    </body>
+</div>
+</body>
 </html>
+
